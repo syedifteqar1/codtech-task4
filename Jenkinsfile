@@ -18,18 +18,10 @@ pipeline {
             }
         }
 
-        // -----------------------------
-        // COMMENT OUT ZAP AND ARCHIVE STAGES
-        // -----------------------------
-
+        // You can comment out OWASP ZAP stage for now
         // stage('OWASP ZAP Scan') {
         //     steps {
-        //         sh '''
-        //         docker run --rm owasp/zap2docker-stable \
-        //         zap-baseline.py \
-        //         -t http://localhost \
-        //         -r zap_report.html
-        //         '''
+        //         sh 'docker run --rm owasp/zap2docker-stable zap-baseline.py -t http://localhost -r zap_report.html'
         //     }
         // }
 
@@ -41,28 +33,3 @@ pipeline {
     } // end stages
 } // end pipeline
 
-
-pipeline {
-    agent any
-
-    stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
-
-        stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('SonarQube') {
-                    sh '''
-                    sonar-scanner \
-                    -Dsonar.projectKey=codtech-task4 \
-                    -Dsonar.projectName="CODTECH Task 4" \
-                    -Dsonar.sources=.
-                    '''
-                }
-            }
-        }
-    }
-}
