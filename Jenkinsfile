@@ -36,13 +36,13 @@ pipeline {
             }
         }
 */
-        stage('Archive Report') {
+/*        stage('Archive Report') {
             steps {
                 archiveArtifacts artifacts: 'zap_report.html'
             }
         }
     }
-}
+}*/
 pipeline {
     agent any
 
